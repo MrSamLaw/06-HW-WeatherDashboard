@@ -5,8 +5,7 @@ BCS Homework 06 - Weather Dashboard
 Our client is planning on taking some time to travel the world and see the sights when COVID-19 ends.  Whilst travelling, they would like to be able to check the weather as they go to aid them in their activity & wardrobe planning.
 
 ## Criteria
-- The site is a weather dashboard
-    - Weather API from openweathermap.org
+- The site is a weather dashboard utilising the One-Call API from openweathermap.org
 - City search form
 - City search history (using localStorage)
 - Weather display results:
