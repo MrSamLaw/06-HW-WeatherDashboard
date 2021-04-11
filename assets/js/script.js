@@ -38,7 +38,7 @@ function handleSearchFormSubmit(event) {
         console.error('You need a search input value!');
         return;
     }
-    updateSearchHistory(searchInputVal);
+
     searchApi(searchInputVal);
 }
 
@@ -54,12 +54,12 @@ function updateSearchHistory(citySearch) {
         }
     }
 
-    document.querySelector("#search-history").innerHTML = "";
+    document.querySelector("#search-history").innerHTML = "Search History";
     searchHistory.forEach(function (citySearches) {
         var searchHistoryBtn = document.createElement("button");
         searchHistoryBtn.classList.add("search-history", "btn", "btn-info", "btn-block");
         searchHistoryBtn.innerHTML = citySearches;
-        document.querySelector("#search-history").prepend(searchHistoryBtn);
+        document.querySelector("#search-history").append(searchHistoryBtn);
     })
 }
 
@@ -72,7 +72,7 @@ function searchApi(citySearch) {
         .then(function (response) {
             if (!response.ok) {
                 console.log("Not a valid city");
-                throw response.json();
+                throw "This is not a valid city";
             }
             return response.json();
         })
@@ -105,12 +105,6 @@ function searchApi(citySearch) {
                     console.log("UV Index: " + data.current.uvi);//(with scale - Favorable, Moderate, Severe)
                     console.log("Future Conditions(5 - Day Forecast");
 
-                    //   - Date
-                    //   - Weather Icon
-                    //     - Temperature
-                    //     - Wind Speed
-                    //       - Humidity
-
                     printCurrent(citySearch, data);
                     printFiveDayForecast(data);
                 });
@@ -140,7 +134,6 @@ function printCurrent(citySearch, city) {
 }
 
 function printFiveDayForecast(city) {
-    document.querySelector("#fiveDayForecast").innerHTML = "<h2>5 Day Forecast</h2>";
     for (i = 1; i < 6; i++) {
         var dailyUnixTime = moment.unix(city.daily[i].dt).format()
         var dailyTimezoneOffset = city.timezone_offset / 3600;
@@ -152,13 +145,13 @@ function printFiveDayForecast(city) {
 
         var dayCard = document.createElement("div");
         dayCard.innerHTML = [
-            `<h5>${moment(dailyUnixTime).utcOffset(dailyTimezoneOffset).format("dddd Do")}</h5>
+            `<h5 class="card-title">${moment(dailyUnixTime).utcOffset(dailyTimezoneOffset).format("dddd Do")}</h5>
           <img src="https://openweathermap.org/img/wn/${city.daily[i].weather[0].icon
             }@2x.png">
-          <p>${city.daily[i].weather[0].description}</p>
-          <p>Temperature: ${Math.round(city.daily[i].temp.day)}°C</p>
-          <p>Wind Speed: ${Math.round(city.daily[i].wind_speed * 3.6)}km/h</p>
-          <p>Humidity: ${city.daily[i].humidity}%</p>`,
+          <p class="card-text">${city.daily[i].weather[0].description}</p>
+          <p class="card-text">Temperature: ${Math.round(city.daily[i].temp.day)}°C</p>
+          <p class="card-text">Wind Speed: ${Math.round(city.daily[i].wind_speed * 3.6)}km/h</p>
+          <p class="card-text">Humidity: ${city.daily[i].humidity}%</p>`,
         ];
         dayCard.classList.add("card");
         // dayCard.innerHTML = [
@@ -166,8 +159,9 @@ function printFiveDayForecast(city) {
         //     ',
 
         // ];
-        document.querySelector("#fiveDayForecast").appendChild(dayCard);
+        document.querySelector("#fiveDayResults").appendChild(dayCard);
     }
+    document.querySelector("#fiveDayForecast").textContent = "5 Day Forecast";
 }
 init();
 searchFormEl.addEventListener('submit', handleSearchFormSubmit);
