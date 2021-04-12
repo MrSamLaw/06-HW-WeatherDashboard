@@ -35,6 +35,9 @@ function handleSearchFormSubmit(event) {
     var searchInputVal = document.querySelector('#city-input').value;
 
     if (!searchInputVal) {
+        document.querySelector(".modal-title").textContent = "Invalid Input"
+        document.querySelector(".modal-body").textContent = "Please enter a city to search for."
+        $("#myModal").modal();
         console.error('You need a search input value!');
         return;
     }
@@ -89,45 +92,57 @@ function searchApi(citySearch) {
     fetch(requestUrl)
         .then(function (response) {
             if (response.ok) {
-                return response.json();
+                response.json().then(function (data) {
+                    console.log(data);
+                    console.log(data.city.coord.lat);
+                    console.log(data.city.coord.lon);
+                });
             } else {
+
+                document.querySelector(".modal-title").textContent = "Invalid Input"
+                document.querySelector(".modal-body").textContent = "Please enter a valid city name."
+                $("#myModal").modal();
                 console.log("Not a valid city");
-                throw response.json();
+                // throw response.json();
             }
         })
-        .then(function (data) {
-            console.log(data);
-            console.log(data.city.coord);
-            console.log(data.city.coord.lat);
-            console.log(data.city.coord.lon);
-            citySearchLat = "lat=" + data.city.coord.lat;
-            citySearchLon = "&lon=" + data.city.coord.lon;
-            console.log(citySearchLat);
-            console.log(citySearchLon);
-
-            var requestLatLonUrl = 'https://api.openweathermap.org/data/2.5/onecall?' + citySearchLat + citySearchLon + excludes + "&units=metric" + OWMApiKey;
-            console.log(requestLatLonUrl);
-            fetch(requestLatLonUrl)
-                .then(function (response) {
-                    if (!response.ok) {
-                        throw response.json();
-                    }
-                    return response.json();
-                })
-                .then(function (data) {
-                    console.log(data);
-
-                    console.log("Current Conditions");
-                    console.log("Temperature: " + data.current.temp);
-                    console.log("Humidity: " + data.current.humidity);
-                    console.log("Wind Speed: " + data.current.wind_speed);
-                    console.log("UV Index: " + data.current.uvi);//(with scale - Favorable, Moderate, Severe)
-                    console.log("Future Conditions(5 - Day Forecast");
-
-                    printCurrent(citySearch, data);
-                    printFiveDayForecast(data);
-                });
+        .catch(function (error) {
+            console.log("Error");
         });
+
+    //     .then(function (data) {
+    // console.log(data);
+    // console.log(data.city.coord);
+    // console.log(data.city.coord.lat);
+    // console.log(data.city.coord.lon);
+    // citySearchLat = "lat=" + data.city.coord.lat;
+    // citySearchLon = "&lon=" + data.city.coord.lon;
+    // console.log(citySearchLat);
+    // console.log(citySearchLon);
+
+    // var requestLatLonUrl = 'https://api.openweathermap.org/data/2.5/onecall?' + citySearchLat + citySearchLon + excludes + "&units=metric" + OWMApiKey;
+    // console.log(requestLatLonUrl);
+    // fetch(requestLatLonUrl)
+    //     .then(function (response) {
+    //         if (!response.ok) {
+    //             throw response.json();
+    //         }
+    //         return response.json();
+    //     })
+    //     .then(function (data) {
+    //         console.log(data);
+
+    //         console.log("Current Conditions");
+    //         console.log("Temperature: " + data.current.temp);
+    //         console.log("Humidity: " + data.current.humidity);
+    //         console.log("Wind Speed: " + data.current.wind_speed);
+    //         console.log("UV Index: " + data.current.uvi);//(with scale - Favorable, Moderate, Severe)
+    //         console.log("Future Conditions(5 - Day Forecast");
+
+    //         printCurrent(citySearch, data);
+    //         printFiveDayForecast(data);
+    //     });
+
 }
 
 function printCurrent(citySearch, city) {

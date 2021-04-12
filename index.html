@@ -21,7 +21,7 @@
     <main>
         <section class="container">
             <div class="row">
-                <div class="col-lg-2 col-md-2 col-sm-12">
+                <div class="col-lg-2 col-md-3 col-sm-12">
                     <div class="card">
                         <form id="search-form" class="mb-2">
                             <input id="city-input" class="form-input w-100" type="text" placeholder="Enter City">
@@ -36,7 +36,7 @@
                     </div> -->
                 </div>
 
-                <div class="col-lg-10 col-md-10 col-sm-12">
+                <div class="col-lg-10 col-md-9 col-sm-12">
                     <div class="card" id="search-results">
                         <h3 id="current-city"></h3>
                         <p id="current-date"></p>
@@ -58,11 +58,35 @@
 
         </section>
     </main>
-    <footer>Brought to you by Crowded House</footer>
+    <footer class="footer">Brought to you by Crowded House</footer>
+
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <div class="modal-header">
+
+                    <h4 class="modal-title">Modal Header</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p> Modal text</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- JQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.slim.js"
         integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
+    <!-- Bootstrap -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
     <!-- Moment JS API -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="assets/js/script.js"></script>
