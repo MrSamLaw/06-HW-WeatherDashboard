@@ -1,5 +1,5 @@
-# 06-HW-WeatherDashboard
-BCS Homework 06 - Weather Dashboard
+# 06-WeatherDashboard
+![Starting Screen](assets/images/WeatherDashboard01.png)
 
 ## Description
 Our client is planning on taking some time to travel the world and see the sights when COVID-19 ends.  Whilst travelling, they would like to be able to check the weather as they go to aid them in their activity & wardrobe planning.
@@ -22,8 +22,10 @@ Our client is planning on taking some time to travel the world and see the sight
         - Humidity
 
 ## Deployment
-
+https://mrsamlaw.github.io/06-WeatherDashboard
 ## Screenshots
+![Search Screen](assets/images/WeatherDashboard02.png)
+![Error Modal](assets/images/WeatherDashboard03.png)
 
 ## Psuedo Code
 - User inputs city name
@@ -50,3 +52,10 @@ Our client is planning on taking some time to travel the world and see the sight
 - Event handler for previous city searches
 
 ## Inspiration
+The color styling was inspired by this image: A Passing View by artist Nicholas Moegly (https://dribbble.com/moegly).
+![A Passing View Image by Nicholas Moegly](assets/images/APassingView-NicholasMoegly.jpg)
+
+
+The UV Index colors were sourced from this image from the Animas Surgical Hospital
+(https://www.animassurgical.com/the-uv-index-and-why-you-should-care-about-it/)
+![UV Index](assets/images/UV-Index.png)

@@ -25,10 +25,12 @@ main {
 header {
     margin: 0;
 }
-main, .card {
+body, .card {
     background-color: var(--dark-slate-gray);
 }
-
+input {
+    color: var(--dark-jungle-green);
+}
 .jumbotron {
     text-align: center;
     border-radius: 0;
@@ -66,7 +68,8 @@ color: var(--dark-slate-gray);
     color: var(--afterglow);
 }
 
-main .btn {
+main .btn, 
+.modal-content .btn{
     background-color: var(--jelly-bean-blue);
     border-color: var(--dark-jungle-green);
     box-shadow: 2px 2px var(--dark-jungle-green);
@@ -81,7 +84,9 @@ main .btn {
     border-radius: .25rem;
 }
 
-
+.modal-content {
+    background-color: var(--dark-jungle-green);
+}
 
 .badge {
     font-weight: 500;
