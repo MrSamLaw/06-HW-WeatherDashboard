@@ -5,6 +5,7 @@ var searchResultsEl = document.querySelector("#search-results");
 var citySearchLat = "";
 var citySearchLon = "";
 
+var MtPleasant = true;
 var searchHistory = [];
 
 const excludes = "&exclude=minutely,hourly,alerts";
@@ -14,6 +15,8 @@ var OWMApiKey = "&appid=8161cdf2d2a69066a121e9f145638d0a";
 function init() {
     getSearchHistory();
     renderSearchHistory();
+    searchApi("Ontario");
+
 }
 
 function getSearchHistory() {
@@ -26,9 +29,9 @@ function getSearchHistory() {
 
 function renderSearchHistory() {
     document.querySelector("#search-history").innerHTML = "";
-    searchHistory.forEach(function (citySearches) {
+    searchHistory.slice(0, 10).forEach(function (citySearches) {
         var searchHistoryBtn = document.createElement("button");
-        searchHistoryBtn.classList.add("search-history-btn", "btn", "btn-info", "btn-block");
+        searchHistoryBtn.classList.add("search-history-btn", "btn", "btn-dark", "btn-block");
         searchHistoryBtn.id = citySearches;
         searchHistoryBtn.innerHTML = citySearches;
         document.querySelector("#search-history").prepend(searchHistoryBtn);
@@ -116,6 +119,10 @@ function printCurrent(citySearch, city) {
 
     var timezoneOffset = city.timezone_offset / 3600;
     var cityNameEl = document.querySelector("#current-city");
+    if (MtPleasant) {
+        citySearch = "57 Mt Pleasant St, Ontario";
+        MtPleasant = false;
+    }
     cityNameEl.innerHTML = citySearch;
     var currentDateEl = document.querySelector("#current-date");
     currentDateEl.innerHTML = moment(unixTime).utcOffset(timezoneOffset).format("dddd Do MMM YYYY [at] h:mm A");
@@ -165,7 +172,7 @@ function printFiveDayForecast(city) {
           <p class="card-text">Wind Speed: ${Math.round(city.daily[i].wind_speed * 3.6)}km/h</p>
           <p class="card-text">Humidity: ${city.daily[i].humidity}%</p>`,
         ];
-        dayCard.classList.add("card");
+        dayCard.classList.add("card", "p-1");
         document.querySelector("#fiveDayResults").appendChild(dayCard);
     }
     document.querySelector("#fiveDayForecast").textContent = "5 Day Forecast";

@@ -1,5 +1,32 @@
+:root {
+    --dark-jungle-green: #0D2626;
+    --dark-slate-gray: #275459;
+    --jelly-bean-blue:#46858C;
+    --bakelit-gold:#D9965B;
+    --afterglow:#F2CC85;
+}
+* {
+    font-family: 'Exo 2', sans-serif;
+    color: var(--bakelit-gold)
+}
+
+h1, h2, h3, h4, h5, h6 {
+    text-transform: uppercase;
+    font-family: 'Passion One', cursive;
+}
+
+html {
+    scroll-behavior: smooth;    
+}
+
 main {
     height: 100vh;
+}
+header {
+    margin: 0;
+}
+main, .card {
+    background-color: var(--dark-slate-gray);
 }
 
 .jumbotron {
@@ -7,12 +34,54 @@ main {
     border-radius: 0;
     border-bottom: 10px solid black;
     height:100vh;
-    margin-bottom: 50px;
-  }
-  
+    background-color: var(--bakelit-gold);
+}
+
+.jumbotron h1 {
+color: var(--dark-slate-gray);
+}
+.jumbotron .btn {
+    min-width: 15em;
+    background-color: var(--jelly-bean-blue);
+    border-color: var(--dark-jungle-green);
+    color: var(--afterglow);
+    box-shadow: 5px 5px var(--dark-jungle-green);
+}
+.jumbotron .lead, 
+.jumbotron .lead em,
+.jumbotron .lead strong {
+    color: var(--dark-jungle-green);
+}
 .description {
     white-space: pre-wrap;
 }
+
+#page-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 75px;
+    margin-bottom: 2em;
+    background-color:var(--dark-jungle-green);
+    color: var(--afterglow);
+}
+
+main .btn {
+    background-color: var(--jelly-bean-blue);
+    border-color: var(--dark-jungle-green);
+    box-shadow: 2px 2px var(--dark-jungle-green);
+}
+.card {
+    border: none;
+}
+
+#search-results, 
+#fiveDayResults .card {
+    border: 1px solid var(--afterglow);
+    border-radius: .25rem;
+}
+
+
 
 .badge {
     font-weight: 500;
@@ -21,9 +90,11 @@ main {
 
 .uv-low {
     background-color: #8EBF45;
+    color: var(--dark-jungle-green);
 }
 .uv-med {
     background-color: #FDD835;
+    color: var(--dark-jungle-green);
 }
 .uv-high {
     background-color: #FFB301;
