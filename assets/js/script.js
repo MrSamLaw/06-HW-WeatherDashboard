@@ -57,11 +57,29 @@ function updateSearchHistory(citySearch) {
     document.querySelector("#search-history").innerHTML = "Search History";
     searchHistory.forEach(function (citySearches) {
         var searchHistoryBtn = document.createElement("button");
-        searchHistoryBtn.classList.add("search-history", "btn", "btn-info", "btn-block");
+        searchHistoryBtn.classList.add("search-history-btn", "btn", "btn-info", "btn-block");
+        searchHistoryBtn.id = citySearches;
         searchHistoryBtn.innerHTML = citySearches;
         document.querySelector("#search-history").append(searchHistoryBtn);
     })
+
+    var searchHistoryButtons = document.querySelectorAll(".search-history-btn");
+    searchHistoryButtons.forEach(function (eachButton) {
+        eachButton.addEventListener("click", function (e) {
+            var city = eachButton.textContent;
+            searchApi(city);
+        });
+    });
 }
+
+function searchCoords(cityLat, cityLon) {
+    var requestLatLonUrl = 'https://api.openweathermap.org/data/2.5/onecall?' + cityLat + cityLon + excludes + "&units=metric" + OWMApiKey;
+    fetch(requestLatLonUrl)
+        .then(function (response) {
+
+        })
+}
+
 
 function searchApi(citySearch) {
     // fetch request gets a list of all the repos for the node.js organization
@@ -70,11 +88,12 @@ function searchApi(citySearch) {
 
     fetch(requestUrl)
         .then(function (response) {
-            if (!response.ok) {
+            if (response.ok) {
+                return response.json();
+            } else {
                 console.log("Not a valid city");
-                throw "This is not a valid city";
+                throw response.json();
             }
-            return response.json();
         })
         .then(function (data) {
             console.log(data);
