@@ -22,18 +22,16 @@ function getSearchHistory() {
     if (searchHistory === null) {
         return;
     }
-
-    document.querySelector("#search-history").innerHTML = "";
 }
 
 function renderSearchHistory() {
-    document.querySelector("#search-history").innerHTML = "<h5>Search History</h5>";
+    document.querySelector("#search-history").innerHTML = "";
     searchHistory.forEach(function (citySearches) {
         var searchHistoryBtn = document.createElement("button");
         searchHistoryBtn.classList.add("search-history-btn", "btn", "btn-info", "btn-block");
         searchHistoryBtn.id = citySearches;
         searchHistoryBtn.innerHTML = citySearches;
-        document.querySelector("#search-history").append(searchHistoryBtn);
+        document.querySelector("#search-history").prepend(searchHistoryBtn);
     })
 
     var searchHistoryButtons = document.querySelectorAll(".search-history-btn");
@@ -68,13 +66,9 @@ function searchApi(citySearch) {
         .then(function (response) {
             if (response.ok) {
                 response.json().then(function (data) {
-                    console.log(data);
-                    console.log(data.city.coord.lat);
-                    console.log(data.city.coord.lon);
                     searchCoords(citySearch, data.city.coord.lat, data.city.coord.lon);
                 });
             } else {
-
                 document.querySelector(".modal-title").textContent = "Invalid Input"
                 document.querySelector(".modal-body").innerHTML = "<strong>" + citySearch + "</strong>" + " is not a valid city name." + "<br />"
                 document.querySelector(".modal-body").innerHTML += "Please enter a valid city name.";
@@ -82,6 +76,7 @@ function searchApi(citySearch) {
             }
         })
 }
+
 function updateSearchHistory(citySearch) {
     console.log("Update Search History");
     console.log("searchHistory Length = " + searchHistory.length);
@@ -93,59 +88,30 @@ function updateSearchHistory(citySearch) {
             localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
         }
     }
-
-
+    renderSearchHistory();
 }
 
 function searchCoords(citySearch, cityLat, cityLon) {
-    var requestLatLonUrl = 'https://api.openweathermap.org/data/2.5/onecall?' + cityLat + cityLon + excludes + "&units=metric" + OWMApiKey;
+    citySearchLat = "lat=" + cityLat;
+    citySearchLon = "&lon=" + cityLon;
+    var requestLatLonUrl = 'https://api.openweathermap.org/data/2.5/onecall?' + citySearchLat + citySearchLon + excludes + "&units=metric" + OWMApiKey;
+    console.log(requestLatLonUrl);
     fetch(requestLatLonUrl)
         .then(function (response) {
-            console.log(response.json());
-            console.log("Search Coords");
-
-            // .then(function (data) {
-            //         console.log(data);
-            //         console.log(data.city.coord);
-            //         console.log(data.city.coord.lat);
-            //         console.log(data.city.coord.lon);
-            citySearchLat = "lat=" + cityLat;
-            citySearchLon = "&lon=" + cityLon;
-            //         console.log(citySearchLat);
-            //         console.log(citySearchLon);
-
-            var requestLatLonUrl = 'https://api.openweathermap.org/data/2.5/onecall?' + citySearchLat + citySearchLon + excludes + "&units=metric" + OWMApiKey;
-            console.log(requestLatLonUrl);
-            fetch(requestLatLonUrl)
-                .then(function (response) {
-                    if (!response.ok) {
-                        throw response.json();
-                    }
-                    return response.json();
-                })
-                .then(function (data) {
-                    console.log(data);
-
-                    console.log("Current Conditions");
-                    console.log("Temperature: " + data.current.temp);
-                    console.log("Humidity: " + data.current.humidity);
-                    console.log("Wind Speed: " + data.current.wind_speed);
-                    console.log("UV Index: " + data.current.uvi);//(with scale - Favorable, Moderate, Severe)
-                    console.log("Future Conditions(5 - Day Forecast");
-
-                    printCurrent(citySearch, data);
-                    printFiveDayForecast(data);
-                });
+            if (!response.ok) {
+                throw response.json();
+            }
+            return response.json();
         })
-
+        .then(function (data) {
+            printCurrent(citySearch, data);
+            printFiveDayForecast(data);
+        });
+    updateSearchHistory(citySearch);
 }
 
-
-
-
-
 function printCurrent(citySearch, city) {
-
+    console.log(city);
     var unixTime = moment.unix(city.current.dt).format();
 
     var timezoneOffset = city.timezone_offset / 3600;
@@ -153,6 +119,8 @@ function printCurrent(citySearch, city) {
     cityNameEl.innerHTML = citySearch;
     var currentDateEl = document.querySelector("#current-date");
     currentDateEl.innerHTML = moment(unixTime).utcOffset(timezoneOffset).format("dddd Do MMM YYYY [at] h:mm A");
+    var currentDescEl = document.querySelector("#current-description");
+    currentDescEl.innerHTML = city.current.weather[0].description;
     var currentIconEl = document.querySelector("#current-icon");
     currentIconEl.innerHTML = '<img src="http://openweathermap.org/img/wn/' + city.current.weather[0].icon + '@2x.png"/>';
     var currentTempEl = document.querySelector("#current-temp");
@@ -160,21 +128,32 @@ function printCurrent(citySearch, city) {
     var currentHumEl = document.querySelector("#current-hum");
     currentHumEl.innerHTML = "Humidity: " + city.current.humidity + "%";
     var currentWindEl = document.querySelector("#current-wind");
-    currentWindEl.innerHTML = "Wind Speed: " + (city.current.wind_speed * 3.6) + "km/h";
+    currentWindEl.innerHTML = "Wind Speed: " + (Math.round(city.current.wind_speed * 3.6)) + "km/h";
     var currentUVEl = document.querySelector("#current-UV");
     currentUVEl.innerHTML = "UV Index: " + city.current.uvi;
+    uvIndex(city.current.uvi, currentUVEl);
+}
 
+
+function uvIndex(index, currentUVEl) {
+    if (index <= 2) {
+        currentUVEl.innerHTML += '<span class="badge uv-low">low</span>';
+    } else if (index <= 5) {
+        currentUVEl.innerHTML += '<span class="badge uv-med">medium</span>';
+    } else if (index <= 7) {
+        currentUVEl.innerHTML += '<span class="badge uv-high">high</span>';
+    } else if (index <= 10) {
+        currentUVEl.innerHTML += '<span class="badge uv-vhigh">very high</span>';
+    } else {
+        currentUVEl.innerHTML += '<span class="badge uv-extreme">extreme</span>';
+    }
 }
 
 function printFiveDayForecast(city) {
+    document.querySelector("#fiveDayResults").innerHTML = "";
     for (i = 1; i < 6; i++) {
         var dailyUnixTime = moment.unix(city.daily[i].dt).format()
         var dailyTimezoneOffset = city.timezone_offset / 3600;
-        console.log(city.daily[i]);
-        console.log(moment(dailyUnixTime).utcOffset(dailyTimezoneOffset).format("D/M/YY"));
-        console.log(city.daily[i].temp.min + "&deg C - " + city.daily[i].temp.max + "&deg C");
-        console.log(city.daily[i].wind_speed * 3.6 + " km/h");
-        console.log(city.daily[i].humidity + "%");
 
         var dayCard = document.createElement("div");
         dayCard.innerHTML = [
@@ -187,11 +166,6 @@ function printFiveDayForecast(city) {
           <p class="card-text">Humidity: ${city.daily[i].humidity}%</p>`,
         ];
         dayCard.classList.add("card");
-        // dayCard.innerHTML = [
-        //     '<h5>Day</h5>            <p>Humidity: ${city.daily[i].humidity}</p>
-        //     ',
-
-        // ];
         document.querySelector("#fiveDayResults").appendChild(dayCard);
     }
     document.querySelector("#fiveDayForecast").textContent = "5 Day Forecast";

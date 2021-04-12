@@ -13,34 +13,44 @@
 </head>
 
 <body>
-    <header class="header">
-        <div class="overlay">
-            <div class="container"></div>
-        </div>
+    <header class="jumbotron">
+        <h1 class="display-3">Everyweather You Go!</h1>
+        <p class="lead">Check the weather now <em>(and everywhere you go)</em></p>
+        <em class="lead">Julius Caesar, and the Roman Empire <br />
+            Couldn't conquer the blue sky <br />
+            <strong>Tim Finn, Neil Finn</strong><br /><br /></em>
+
+        <a href="#top"><button class="col-1 btn btn-light btn-lg">How Will You Go?</button></a>
     </header>
-    <main>
-        <section class="container">
+    <main id="top">
+        <section class="container-fluid">
             <div class="row">
                 <div class="col-lg-2 col-md-3 col-sm-12">
                     <div class="card">
                         <form id="search-form" class="mb-2">
                             <input id="city-input" class="form-input w-100" type="text" placeholder="Enter City">
-                            <button class="btn btn-info btn-block">Search</button>
+                            <button class="btn btn-lg btn-info btn-block">Search</button>
                         </form>
                     </div>
+                    <h5>Search History</h5>
                     <div class="card" id="search-history">
+
                     </div>
                 </div>
 
                 <div class="col-lg-10 col-md-9 col-sm-12">
                     <div class="card" id="search-results">
-                        <h3 id="current-city"></h3>
+                        <h3 id="current-city" class="text-center">Please search for a city to begin</h3>
                         <p id="current-date"></p>
+                        <p id="current-description"></p>
                         <p id="current-icon"></p>
                         <p id="current-temp"></p>
                         <p id="current-hum"></p>
                         <p id="current-wind"></p>
-                        <p id="current-UV"></p>
+                        <p id="current-UV">
+                        <p id="UV-scale"></p>
+                        </p>
+
                     </div>
                     <div class="card">
                         <h2 id="fiveDayForecast"></h2>
@@ -51,7 +61,6 @@
 
         </section>
     </main>
-    <footer class="footer">Brought to you by Crowded House</footer>
 
     <!-- Modal -->
     <div id="myModal" class="modal fade" role="dialog">
