@@ -51,6 +51,12 @@ https://mrsamlaw.github.io/06-WeatherDashboard
 - Store city name in localStorage
 - Event handler for previous city searches
 
+## Further Improvements
+- Wind Direction addressed
+- Limit Search History shown
+- Display a map of location
+- Weather based on time of day
+
 ## Inspiration
 The color styling was inspired by this image: A Passing View by artist Nicholas Moegly (https://dribbble.com/moegly).
 ![A Passing View Image by Nicholas Moegly](assets/images/APassingView-NicholasMoegly.jpg)

@@ -1,22 +1,21 @@
+// Query Selectors
 var searchFormEl = document.querySelector("#search-form");
 var searchHistoryEl = document.querySelector("#search-history");
 var searchResultsEl = document.querySelector("#search-results");
 
+// Global Variables
 var citySearchLat = "";
 var citySearchLon = "";
-
 var MtPleasant = true;
 var searchHistory = [];
-
 const excludes = "&exclude=minutely,hourly,alerts";
-
 var OWMApiKey = "&appid=8161cdf2d2a69066a121e9f145638d0a";
 
 function init() {
     getSearchHistory();
     renderSearchHistory();
+    // Initial API call for example weather
     searchApi("Ontario");
-
 }
 
 function getSearchHistory() {
@@ -28,8 +27,9 @@ function getSearchHistory() {
 }
 
 function renderSearchHistory() {
+    // Renders search history buttons
     document.querySelector("#search-history").innerHTML = "";
-    searchHistory.slice(0, 10).forEach(function (citySearches) {
+    searchHistory.forEach(function (citySearches) {
         var searchHistoryBtn = document.createElement("button");
         searchHistoryBtn.classList.add("search-history-btn", "btn", "btn-dark", "btn-block");
         searchHistoryBtn.id = citySearches;
@@ -37,6 +37,7 @@ function renderSearchHistory() {
         document.querySelector("#search-history").prepend(searchHistoryBtn);
     })
 
+    // Enables Search History buttons with values
     var searchHistoryButtons = document.querySelectorAll(".search-history-btn");
     searchHistoryButtons.forEach(function (eachButton) {
         eachButton.addEventListener("click", function (e) {
@@ -47,6 +48,7 @@ function renderSearchHistory() {
 }
 
 function handleSearchFormSubmit(event) {
+    // Takes user search and validates it before searching
     event.preventDefault();
 
     var searchInputVal = document.querySelector('#city-input').value;
@@ -81,9 +83,7 @@ function searchApi(citySearch) {
 }
 
 function updateSearchHistory(citySearch) {
-    console.log("Update Search History");
-    console.log("searchHistory Length = " + searchHistory.length);
-
+    // Enters search history into localStorage
     if (!searchHistory.includes(citySearch)) {
         console.log(searchHistory)
         if (citySearch != null) {
@@ -95,10 +95,10 @@ function updateSearchHistory(citySearch) {
 }
 
 function searchCoords(citySearch, cityLat, cityLon) {
+    // Searches One Call API based on latitude & longitude
     citySearchLat = "lat=" + cityLat;
     citySearchLon = "&lon=" + cityLon;
     var requestLatLonUrl = 'https://api.openweathermap.org/data/2.5/onecall?' + citySearchLat + citySearchLon + excludes + "&units=metric" + OWMApiKey;
-    console.log(requestLatLonUrl);
     fetch(requestLatLonUrl)
         .then(function (response) {
             if (!response.ok) {
@@ -114,7 +114,7 @@ function searchCoords(citySearch, cityLat, cityLon) {
 }
 
 function printCurrent(citySearch, city) {
-    console.log(city);
+    // Prints current day weather
     var unixTime = moment.unix(city.current.dt).format();
 
     var timezoneOffset = city.timezone_offset / 3600;
@@ -141,8 +141,8 @@ function printCurrent(citySearch, city) {
     uvIndex(city.current.uvi, currentUVEl);
 }
 
-
 function uvIndex(index, currentUVEl) {
+    // Updates the UV Index indicator
     if (index <= 2) {
         currentUVEl.innerHTML += '<span class="badge uv-low">low</span>';
     } else if (index <= 5) {
@@ -157,6 +157,7 @@ function uvIndex(index, currentUVEl) {
 }
 
 function printFiveDayForecast(city) {
+    // Prints the 5 day Forecast
     document.querySelector("#fiveDayResults").innerHTML = "";
     for (i = 1; i < 6; i++) {
         var dailyUnixTime = moment.unix(city.daily[i].dt).format()
@@ -177,5 +178,6 @@ function printFiveDayForecast(city) {
     }
     document.querySelector("#fiveDayForecast").textContent = "5 Day Forecast";
 }
+
 init();
 searchFormEl.addEventListener('submit', handleSearchFormSubmit);
