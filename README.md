@@ -2,7 +2,7 @@
 ![Starting Screen](assets/images/WeatherDashboard01.png)
 
 ## Deployment
-https://mrsamlaw.github.io/06-WeatherDashboard
+[https://mrsamlaw.github.io/06-WeatherDashboard/](https://mrsamlaw.github.io/06-WeatherDashboard/)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
