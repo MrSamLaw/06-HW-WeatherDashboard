@@ -1,5 +1,18 @@
-# 06-WeatherDashboard
+# Everyweather You Go - Weather Dashboard
 ![Starting Screen](assets/images/WeatherDashboard01.png)
+
+## Deployment
+https://mrsamlaw.github.io/06-WeatherDashboard
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+## Technologies
+- HTML
+- CSS
+- Twitter Bootstrap
+- JavaScript
+- JQuery
+- Moment JS
 
 ## Description
 Our client is planning on taking some time to travel the world and see the sights when COVID-19 ends.  Whilst travelling, they would like to be able to check the weather as they go to aid them in their activity & wardrobe planning.
@@ -21,8 +34,6 @@ Our client is planning on taking some time to travel the world and see the sight
         - Wind Speed
         - Humidity
 
-## Deployment
-https://mrsamlaw.github.io/06-WeatherDashboard
 ## Screenshots
 ![Search Screen](assets/images/WeatherDashboard02.png)
 ![Error Modal](assets/images/WeatherDashboard03.png)
@@ -60,7 +71,6 @@ https://mrsamlaw.github.io/06-WeatherDashboard
 ## Inspiration
 The color styling was inspired by this image: A Passing View by artist Nicholas Moegly (https://dribbble.com/moegly).
 ![A Passing View Image by Nicholas Moegly](assets/images/APassingView-NicholasMoegly.jpg)
-
 
 The UV Index colors were sourced from this image from the Animas Surgical Hospital
 (https://www.animassurgical.com/the-uv-index-and-why-you-should-care-about-it/)
